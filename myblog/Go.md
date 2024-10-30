@@ -295,9 +295,33 @@ $ go run -gcflags "-m -N -l" main.go
 - ASCII字符串长度使用len()函数
 - Unicode字符串使用utf8.RuneCountInString()函数
 
+在Go中，如果你想逐个获取字符串 `s` 的每个字符，可以将字符串转换为 `rune` 切片，或者直接使用 `for range` 循环遍历 `s`，因为 `for range` 会自动将字符串分解为 `rune` 类型的字符。
+
+这里有两种常见的方法：
+
+#### 方法1：直接使用 `for range` 遍历
+```go
+package main
+
+import "fmt"
+
+func main() {
+    s := "Hello, 世界"
+    
+    for i, r := range s {
+        fmt.Printf("字符 %d: %c, Unicode码点: %U\n", i, r, r)
+    }
+}
 ```
 
+**解释**：`for range` 会将字符串按字符分割，每个字符存储在 `r` 中，`i` 是字符的字节起始位置。这种方法可以正确处理多字节的Unicode字符。
+
+#### 方法2：转换为 `rune` 切片
+```go
+r := []rune(s)
 ```
+
+**解释**：将字符串 `s` 转换为 `rune` 切片后，每个元素都是一个 `rune`，可以表示一个Unicode字符。这种方法适合需要按字符（而不是字节）索引访问字符串时使用。比如访问第一个元素使用r[0]就可以了，最后使用string(r)将其转回string类型
 
 
 ## 三、容器：存储和组织数据
