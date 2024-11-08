@@ -323,6 +323,19 @@ r := []rune(s)
 
 **解释**：将字符串 `s` 转换为 `rune` 切片后，每个元素都是一个 `rune`，可以表示一个Unicode字符。这种方法适合需要按字符（而不是字节）索引访问字符串时使用。比如访问第一个元素使用r[0]就可以了，最后使用string(r)将其转回string类型
 
+#### 方法 3：使用 strings.Split 将字符串转换为数组
+可以先用 strings.Split 函数将字符串拆分为字符数组，然后遍历该数组，将每个字符转换为整数：
+```go
+strDigits := strings.Split(num, "")
+digits := make([]int, len(strDigits))
+
+for i, s := range strDigits {
+	digit, err := strconv.Atoi(s)
+	if err != nil {
+	return nil, err
+	}
+}
+```
 
 ## 三、容器：存储和组织数据
 
